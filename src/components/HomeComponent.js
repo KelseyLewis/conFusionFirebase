@@ -15,6 +15,7 @@ function RenderCard({item, isLoading, errMess}) {
         );
     }
     else
+        console.log(item.name);
         return(
             <FadeTransform in 
                 transformProps={{
@@ -33,6 +34,7 @@ function RenderCard({item, isLoading, errMess}) {
 }
 
 function Home(props) {
+    console.log(props.dish);
     return(
         <div className="container">
             <div className="row align-items-start">

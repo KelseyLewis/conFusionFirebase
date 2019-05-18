@@ -5,6 +5,7 @@ firebase.initializeApp(config);
 
 export const auth = firebase.auth();
 
+//used in action creators
 export const fireauth = firebase.auth;
 
 const settings = {timestampsInSnapshots: true};

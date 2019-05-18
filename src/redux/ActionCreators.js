@@ -12,7 +12,7 @@ export const postComment = (dishId, rating, comment) => (dispatch) => {
         console.log('No user logged in!');
         return;
     }
-
+    //in order to fetch a collection from firebase...
     return firestore.collection('comments').add({
         author: {
             '_id': auth.currentUser.uid,
@@ -25,6 +25,7 @@ export const postComment = (dishId, rating, comment) => (dispatch) => {
         updatedAt: firebasestore.FieldValue.serverTimestamp()
     })
     .then(docRef => {
+        //documentID and doc data stored separately
         firestore.collection('comments').doc(docRef.id).get()
             .then(doc => {
                 if (doc.exists) {
@@ -48,12 +49,14 @@ export const fetchDishes = () => (dispatch) => {
     return firestore.collection('dishes').get()
         .then(snapshot => {
             let dishes = [];
+            //snapshot of current state of collection
             snapshot.forEach(doc => {
                 const data = doc.data()
                 const _id = doc.id
+                //reconstruct array of dishes
                 dishes.push({_id, ...data });
             });
-            return dishes;
+            return dishes; 
         })
         .then(dishes => dispatch(addDishes(dishes)))
         .catch(error => dispatch(dishesFailed(error.message)));
@@ -192,6 +195,7 @@ export const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
+    //auth provides currentUser object 
     return auth.signInWithEmailAndPassword(creds.username, creds.password)
     .then(() => {
         var user = auth.currentUser;
